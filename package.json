@@ -1,0 +1,30 @@
+{
+    "name": "sorrygle",
+    "icon": "media/images/logo.png",
+    "displayName": "Sorrygle",
+    "description": "Text-based MIDI-writing language",
+    "version": "0.1.0",
+    "repository": {
+        "url": "https://github.com/JJoriping/Sorrygle-VSCode"
+    },
+    "engines": {
+        "vscode": "^1.61.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "publisher": "JJoriping",
+    "contributes": {
+        "languages": [{
+            "id": "sorrygle",
+            "aliases": ["Sorrygle", "sorrygle"],
+            "extensions": [".srg"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "sorrygle",
+            "scopeName": "source.srg",
+            "path": "./syntaxes/sorrygle.tmLanguage.json"
+        }]
+    }
+}

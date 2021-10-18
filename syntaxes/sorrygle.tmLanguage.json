@@ -1,0 +1,215 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "Sorrygle",
+	"patterns": [
+		{ "include": "#head-comment" },
+		{ "include": "#tail-comment" },
+		{ "include": "#global-configuration" },
+		{ "include": "#udr-definition" },
+		{ "include": "#parallelization" },
+		{ "include": "#range" },
+		{ "include": "#group-declaration" },
+		{ "include": "#group-reference" },
+		{ "include": "#local-configuration" },
+		{ "include": "#channel-declaration" },
+		{ "include": "#diacritic" },
+		{ "include": "#chord" },
+		{ "include": "#grace" },
+		{ "include": "#note" },
+		{ "include": "#decoration" },
+		{ "include": "#repeat" }
+	],
+	"repository": {
+		"head-comment": {
+			"name": "comment.line.head.srg",
+			"match": "[\\s\\S]*=/"
+		},
+		"tail-comment": {
+			"name": "comment.line.tail.srg",
+			"match": "/=[\\s\\S]*"
+		},
+		"global-configuration": {
+			"name": "markup.bold.configuration.global.srg",
+			"begin": "\\(\\(",
+			"patterns": [
+				{ "include": "#configuration-set" }
+			],
+			"end": "\\)\\)(?!\\))"
+		},
+		"udr-definition": {
+			"name": "support.class.udr.definition.srg",
+			"begin": "(\\{\\{)(.+?)(\\}\\})\\s*(\\{)",
+			"captures": {
+				"2": { "name": "entity.name.function" }
+			},
+			"patterns": [
+				{ "include": "#parallelization" },
+				{ "include": "#range" },
+				{ "include": "#local-configuration" },
+				{ "include": "#diacritic" },
+				{ "include": "#chord" },
+				{ "include": "#grace" },
+				{ "include": "#note" },
+				{ "include": "#special-note" },
+				{ "include": "#group-reference" },
+				{ "include": "#decoration" },
+				{ "include": "#head-comment" },
+				{ "include": "#tail-comment" }
+			],
+			"end": "\\}"
+		},
+		"parallelization": {
+			"name": "entity.name.tag.parallelization.srg",
+			"begin": "\\[\\[",
+			"patterns": [
+				{ "include": "#range" },
+				{ "include": "#local-configuration" },
+				{ "include": "#diacritic" },
+				{ "include": "#chord" },
+				{ "include": "#grace" },
+				{ "include": "#note" },
+				{ "include": "#special-note" },
+				{ "include": "#group-reference" },
+				{ "include": "#decoration" },
+				{ "include": "#head-comment" },
+				{ "include": "#tail-comment" }
+			],
+			"end": "\\]\\]"
+		},
+		"range": {
+			"name": "string.interpolated.range.srg",
+			"begin": "\\{\\{(.+?)\\}\\}\\(|\\([\\^v357s]",
+			"captures": {
+				"1": { "name": "entity.name.function" }
+			},
+			"patterns": [
+				{ "include": "#parallelization" },
+				{ "include": "#diacritic" },
+				{ "include": "#chord" },
+				{ "include": "#grace" },
+				{ "include": "#note" },
+				{ "include": "#special-note" },
+				{ "include": "#group-reference" },
+				{ "include": "#decoration" },
+				{ "include": "#local-configuration" },
+				{ "include": "#head-comment" },
+				{ "include": "#tail-comment" }
+			],
+			"end": "\\)"
+		},
+		"group-declaration": {
+			"name": "constant.language.group.declaration.srg",
+			"begin": "\\{\\d+",
+			"patterns": [
+				{ "include": "#parallelization" },
+				{ "include": "#range" },
+				{ "include": "#local-configuration" },
+				{ "include": "#diacritic" },
+				{ "include": "#chord" },
+				{ "include": "#grace" },
+				{ "include": "#note" },
+				{ "include": "#special-note" },
+				{ "include": "#group-reference" },
+				{ "include": "#decoration" },
+				{ "include": "#head-comment" },
+				{ "include": "#tail-comment" }
+			],
+			"end": "\\}"
+		},
+		"group-reference": {
+			"name": "support.function.group.reference.srg",
+			"match": "\\{=\\d+\\}"
+		},
+		"local-configuration": {
+			"name": "keyword.operator.configuration.local.srg",
+			"begin": "\\(",
+			"patterns": [
+				{ "include": "#emoji" },
+				{ "include": "#configuration-set" }
+			],
+			"end": "\\)"
+		},
+		"channel-declaration": {
+			"name": "keyword.control.channel.srg",
+			"match": "#\\d+"
+		},
+		"diacritic": {
+			"name": "support.class.diacritic.srg",
+			"begin": "<.",
+			"patterns": [
+				{ "include": "#range" },
+				{ "include": "#chord" },
+				{ "include": "#grace" },
+				{ "include": "#note" },
+				{ "include": "#special-note" },
+				{ "include": "#decoration" },
+				{ "include": "#diacritic-parameter" },
+				{ "include": "#head-comment" },
+				{ "include": "#tail-comment" }
+			],
+			"end": ">"
+		},
+		"chord": {
+			"name": "string.quoted.chord.srg",
+			"begin": "\\[(?!>)",
+			"patterns": [
+				{ "include": "#note" },
+				{ "include": "#special-note" },
+				{ "include": "#decoration" },
+				{ "include": "#head-comment" },
+				{ "include": "#tail-comment" }
+			],
+			"end": "\\]"
+		},
+		"grace": {
+			"name": "string.regexp.grace.srg",
+			"begin": "\\[>",
+			"patterns": [
+				{ "include": "#note" },
+				{ "include": "#special-note" },
+				{ "include": "#decoration" },
+				{ "include": "#head-comment" },
+				{ "include": "#tail-comment" }
+			],
+			"end": "\\]"
+		},
+		"note": {
+			"name": "constant.numeric.note.srg",
+			"match": "[cdefgabCDFGA도레미파솔라시돗렛팟솘랏렢밒솚랖싶]"
+		},
+		"special-note": {
+			"name": "constant.character.escape",
+			"match": "x"
+		},
+		"decoration": {
+			"name": "keyword.operator.decoration.srg",
+			"match": "_|~|\\+|-|\\^|v|ㅡ|ㅇ"
+		},
+		"repeat": {
+			"name": "keyword.control.repeat.srg",
+			"match": ":\\|(\\d+)?|\\|:|/\\d+"
+		},
+
+		"configuration-set": {
+			"match": "([\\w.\\/\\-]+)(=)([\\w.\\/\\-]+)",
+			"captures": {
+				"1": { "name": "variable.name" },
+				"2": { "name": "keyword.operator" },
+				"3": { "name": "string.unquoted" }
+			}
+		},
+		"diacritic-parameter": {
+			"name": "variable.parameter.diacritic.srg",
+			"match": "\\(([-.\\d]+)\\)"
+		},
+		"emoji": {
+			"name": "support.variable.emoji.srg",
+			"match": "[^\\x00-\\xFF]+"
+		},
+		"error": {
+			"name": "invalid.illegal",
+			"match": ".*"
+		}
+	},
+	"scopeName": "source.srg"
+}
